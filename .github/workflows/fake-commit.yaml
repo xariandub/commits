@@ -1,0 +1,23 @@
+name: Daily Fake Commit
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"  # Runs every 6 hours
+  workflow_dispatch:       # Allows manual trigger
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+
+    - name: Update activity.log
+      run: |
+        echo "$(date) - Commit activity log" >> activity.log
+        git config user.name "Monir"
+        git config user.email "monirxperiaz2@gmail.com"
+        git add activity.log
+        git commit -m "Fake commit on $(date)"
+        git push
